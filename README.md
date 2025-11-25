@@ -1,4 +1,4 @@
-# SunShop.LocalInfrastructure
+# SunShop.LocalInfrastructure 
 
 Infraestructura local para el desarrollo de microservicios SunShop utilizando Docker Compose.
 
@@ -55,7 +55,7 @@ Cache en memoria para almacenamiento de datos de alta velocidad.
 
 ### Iniciar todos los servicios
 ```bash
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 ### Detener todos los servicios
@@ -91,4 +91,26 @@ Los siguientes volúmenes se crean para persistir datos entre reinicios:
 
 ## Red
 
-Todos los servicios están conectados a la red `microservices-network` con driver bridge, permitiendo la comunicación entre contenedores.
+Todos los servicios están conectados a la red `SunShop.Network` con driver bridge, permitiendo la comunicación entre contenedores.
+
+## Comandos útiles para consultar recursos en LocalStack
+
+Puedes listar colas SQS, tópicos SNS y suscripciones SNS usando `awslocal` tanto desde fuera como desde fuera del contenedor:
+
+### Desde dentro del contenedor LocalStack:
+
+```bash
+awslocal sqs list-queues
+awslocal sns list-topics
+awslocal sns list-subscriptions
+```
+
+### Desde fuera del contenedor LocalStack:
+
+```bash
+docker exec -it SuSunShop.LocalStack.AWS awslocal sqs list-queues
+docker exec -it SuSunShop.LocalStack.AWS awslocal sns list-topics
+docker exec -it SuSunShop.LocalStack.AWS awslocal sns list-subscriptions
+```
+
+Estos comandos permiten ver las colas, tópicos y suscripciones configurados en el entorno local de AWS simulado por LocalStack.
